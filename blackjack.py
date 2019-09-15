@@ -4,28 +4,11 @@ print 'This is Blackjack'
 
 # Making a deck class
 class Deck(object):
-    # Gives a deck attributes
     suits = ['H','S','C','D']
-            # a deck has these values
     values = [2, 3, 4, 5, 6, 7, 8, 9, 10,'J','Q','K','A']
 
-    def Converter(self):
-        if self.value == 'J' or 'Q' or 'K':
-            return 10
 
-        elif self.value == 'A'
-            return 11
-
-# boop
     def __init__(self):
-        # a deck has these suits
-        # self.suits = ['H','S','C','D']
-        # # a deck has these values
-        # self.values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
-        # #
-#        self.make_deck()
-
-#    def make_deck(self):
         self.cardlist = []
         for suit in self.suits:
             for value in self.values:
@@ -39,53 +22,86 @@ class Deck(object):
     def shuffle(self):
         pass
 
+    # def converter(self):
+    #     if self.value == 'J' or 'Q' or 'K':
+    #         return 10
+    #
+    #     elif self.value == 'A'
+    #         return 11
+
 class Card(object):
     def __init__(self, suit, value):
         self.suit = suit
-        self.value = value
+        self.str_value = str(value)
+        self.num_value = self.converter(value)
 
     def __repr__(self):
-        return self.value + self.suit
+        return self.str_value + self.suit
 
-
-
-class Player
-    def __init__(self, hand, score, bet)
-
-        def hand(self, cards)
-            cards = []
-                if
-
-        if player.score < 21:
-            print ('You\'re at' + {player.score} + '.')
-            #  Prompt if they haven't busted
-
-        elif player.score == 21:
-            return "Blackjack, you win!"
-            # Prompt if you win
-
-        elif player.score > 21 and hand.card.value == 11
-            return 1
-            # Solving the Ace problem?
-
-        else
-            return "Bust, you lose!"
-            # Prompt if you lose
-
-            if player_in:
-        response = int(raw_input('Hit or stay? (Hit = 1, Stay = 0)'))
-        # If the player asks to be hit, take the first card from the top of
-        # deck and add it to their hand. If they ask to stay, change
-        # player_in to false, and move on to the dealer's hand.
-        if response:
-            player_in = True
-            new_player_card = deck.pop()
-            player_hand.append(new_player_card)
-            print 'You draw %s' % new_player_card
+    def converter(self, value):
+        if value in ['J', 'Q', 'K']:
+            return 10
+        elif value == 'A':
+            return 11
         else:
-            player_in = False
+            return value
 
-# Class Game
+class Player(object):
+
+    def __init__(self, money):
+        self.hand = []
+
+    def draw(self, hand):
+        pass
+
+    def clear_hnd(self, hand):
+        pass
+
+    def score_hnd(self, hand):
+        pass
+
+# class Dealer(Player):
+#     def __init__(self):
+#         super().__init__(0)
+#
+#
+
+        # if player.score < 21:
+        #     print ('You\'re at' + {player.score} + '.')
+        #     #  Prompt if they haven't busted
+        #
+        # elif player.score == 21:
+        #     return "Blackjack, you win!"
+        #     # Prompt if you win
+        #
+        # elif player.score > 21 and hand.card.value == 11
+        #     return 1
+        #     # Solving the Ace problem?
+        #
+        # else
+        #     return "Bust, you lose!"
+        #     # Prompt if you lose
+
+
+
+class Game(object):
+    # player goes first
+    # dealer win ties
+    # score compare
+    # play game
+
+    def __init__(self, player):
+        pass
+
+    def play_game(self):
+        pass
+
+    def play_round(self):
+        pass
+
+
+
+
 #
 # if __name__ == '__main__':
 #     my_deck = Deck()
