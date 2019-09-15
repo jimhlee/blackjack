@@ -16,7 +16,7 @@ class Deck(object):
         elif self.value == 'A'
             return 11
 
-
+# boop
     def __init__(self):
         # a deck has these suits
         # self.suits = ['H','S','C','D']
