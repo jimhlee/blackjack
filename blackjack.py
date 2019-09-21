@@ -1,4 +1,5 @@
 # Blackjack
+import random
 
 print('This is Blackjack')
 
@@ -13,10 +14,10 @@ class Deck(object):
         for suit in self.suits:
             for value in self.values:
                 self.cardlist.append(Card(suit,value))
-
+        self.shuffle()
 
     def draw_card(self):
-        pass
+        return self.cardlist.pop()
 
     def __repr__(self):
         pass
@@ -28,7 +29,7 @@ class Deck(object):
     # Moved for clarity
 
     def shuffle(self):
-        random.shuffle(deck)
+        random.shuffle(self.cardlist)
         # Not sure the random method that should be used here, but this is where the deck can be shuffled
 
 
@@ -64,10 +65,9 @@ class Player(object):
     def dollaz(self, bet):
         self.money -= bet
 
-    def draw(self, hand):
-        append.hand(deck(pop[0]))
-        pass
-        # This appends to the hand
+    def draw(self, deck):
+        card = deck.draw_card()
+        self.hand.append(card)
 
     def get_hand(self):
         for card in hand:
@@ -76,9 +76,11 @@ class Player(object):
     def clear_hnd(self):
         self.hand = []
 
-    def score_hnd(self, hand):
-        # This is where the hand values get added up
-        pass
+    def score_hnd(self):
+        score = 0
+        for card in self.hand:
+            score += card.num_value
+        return score
 
 # class Dealer(Player):
 #     def __init__(self):
@@ -106,7 +108,7 @@ class Game(object):
     def __init__(self, player):
         self.player = player
         self.deck = Deck()
-        pass
+        self.dealer = Player(0)
 
     def play_game(self):
         playing_game = True
@@ -138,15 +140,33 @@ class Game(object):
 
 
     def play_round(self):
-        # deal cards to player and Dealer
-        # hit or stay loop for Player
-        # force action on busted
         # repeat for dealer
         # determine winner
         # reapportion money
         # clear hand
         # play again?
         bet = self.bet_prompt()
+        for i in range(2):
+            self.player.draw(self.deck)
+        print(f'You have {self.player.hand}')
+        for i in range(2):
+            self.dealer.draw(self.deck)
+        print(f'The dealer is showing {self.dealer.hand[0]}')
+
+        while True:
+            score = self.player.score_hnd()
+            if score >= 21:
+                break
+            is_hit = input('Would you like to hit? (y/n)')
+            if is_hit == 'n':
+                break
+            self.player.draw(self.deck)
+
+
+
+
+
+
 
 
 
