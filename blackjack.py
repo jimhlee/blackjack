@@ -1,6 +1,6 @@
 # Blackjack
 
-print 'This is Blackjack'
+print('This is Blackjack')
 
 # Making a deck class
 class Deck(object):
@@ -15,12 +15,17 @@ class Deck(object):
                 self.cardlist.append(Card(suit,value))
 
 
+    def draw_card(self):
+        pass
+
     def __repr__(self):
         pass
         # This is how we show people their cards
-    def get_hand(self):
-        for card in hand:
-            print(card)
+
+    # def get_hand(self):
+    #     for card in hand:
+    #         print(card)
+    # Moved for clarity
 
     def shuffle(self):
         random.shuffle(deck)
@@ -52,18 +57,24 @@ class Card(object):
             return value
 
 class Player(object):
-
     def __init__(self, money):
         self.hand = []
-            # This is where the hand lies
+        self.money = money
+
+    def dollaz(self, bet):
+        self.money -= bet
 
     def draw(self, hand):
+        append.hand(deck(pop[0]))
         pass
         # This appends to the hand
 
-    def clear_hnd(self, hand):
-        return self.hand = []
-        pass
+    def get_hand(self):
+        for card in hand:
+            print(card)
+
+    def clear_hnd(self):
+        self.hand = []
 
     def score_hnd(self, hand):
         # This is where the hand values get added up
@@ -91,36 +102,56 @@ class Player(object):
         #     return "Bust, you lose!"
         #     # Prompt if you lose
 
-
-
-playing_game = True
-
 class Game(object):
-    while playing_game:
-
-    # player goes first
-    # Is player.input a thing? or is it player(input)?
-    # dealer win ties
-        if player.score == dealer.score:
-            print('Tie! Dealer Wins!')
-            return
-    # score compare
-    # play game
-        # Play again?
-
     def __init__(self, player):
+        self.player = player
+        self.deck = Deck()
         pass
 
     def play_game(self):
-        # is this where the while game_playing is true should be?
-        pass
+        playing_game = True
+        while playing_game:
+            self.play_round()
+            keep_playing = input('Would you like to keep playing? (y/n)')
+            playing_game = keep_playing == 'y'
+        # if deck.len < 10:
+    def bet_prompt(self):
+        ante = 10
+        while True:
+            bet = int(input('How much money would you like to bet?'))
+            if bet > self.player.money:
+                print('Money fail', self.player.money, bet)
+                continue
+            if bet < ante:
+                print(f'Ante fail, you bet {bet}, you must bet at least {ante}')
+                continue
+            break
+
+        self.player.dollaz(bet)
+        print(f'You bet {bet}, you have {self.player.money} left')
+        return bet
+            # if bet > money
+            # if bet < ante
+            #
+        # while self.player.bet > self.player.money:
+        #     print('Can\'t bet that much, you only have f.()')
+
 
     def play_round(self):
-        pass
+        # deal cards to player and Dealer
+        # hit or stay loop for Player
+        # force action on busted
+        # repeat for dealer
+        # determine winner
+        # reapportion money
+        # clear hand
+        # play again?
+        bet = self.bet_prompt()
 
 
 
 
-#
-# if __name__ == '__main__':
-#     my_deck = Deck()
+if __name__ == '__main__':
+    my_deck = Deck()
+    my_player = Player(100)
+    play = Game(my_player)
