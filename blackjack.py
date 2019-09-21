@@ -14,13 +14,18 @@ class Deck(object):
             for value in self.values:
                 self.cardlist.append(Card(suit,value))
 
-        self.shuffle
 
     def __repr__(self):
-        return 'More like my DICK'
+        pass
+        # This is how we show people their cards
+    def get_hand(self):
+        for card in hand:
+            print(card)
 
     def shuffle(self):
-        pass
+        random.shuffle(deck)
+        # Not sure the random method that should be used here, but this is where the deck can be shuffled
+
 
     # def converter(self):
     #     if self.value == 'J' or 'Q' or 'K':
@@ -50,14 +55,18 @@ class Player(object):
 
     def __init__(self, money):
         self.hand = []
+            # This is where the hand lies
 
     def draw(self, hand):
         pass
+        # This appends to the hand
 
     def clear_hnd(self, hand):
+        return self.hand = []
         pass
 
     def score_hnd(self, hand):
+        # This is where the hand values get added up
         pass
 
 # class Dealer(Player):
@@ -84,16 +93,26 @@ class Player(object):
 
 
 
+playing_game = True
+
 class Game(object):
+    while playing_game:
+
     # player goes first
+    # Is player.input a thing? or is it player(input)?
     # dealer win ties
+        if player.score == dealer.score:
+            print('Tie! Dealer Wins!')
+            return
     # score compare
     # play game
+        # Play again?
 
     def __init__(self, player):
         pass
 
     def play_game(self):
+        # is this where the while game_playing is true should be?
         pass
 
     def play_round(self):
