@@ -18,26 +18,19 @@ class Deck(object):
     def draw_card(self):
         return self.cardlist.pop()
 
-    def __repr__(self):
-        pass
-        # This is how we show people their cards
-
-    # def get_hand(self):
-    #     for card in hand:
-    #         print(card)
-    # Moved for clarity
-
     def shuffle(self):
         random.shuffle(self.cardlist)
-        # Not sure the random method that should be used here, but this is where the deck can be shuffled
 
-    # def converter(self):
-    #     if self.value == 'J' or 'Q' or 'K':
-    #         return 10
-    #
-    #     elif self.value == 'A'
-    #         return 11
+    def fresh_deck(self):
+        if len(self.cardlist) < 10:
+            self.cardlist = []
+            for suit in self.suits:
+                for value in self.values:
+                    self.cardlist.append(Card(suit,value))
+                    self.shuffle()
+            return
 
+# Making a card class
 class Card(object):
     def __init__(self, suit, value):
         self.suit = suit
@@ -54,6 +47,9 @@ class Card(object):
             return 11
         else:
             return value
+
+    def ace_changer(self):
+        self.player.player_score -= 10
 
 class Player(object):
     def __init__(self, money):
@@ -81,20 +77,20 @@ class Game(object):
         self.player = player
         self.deck = Deck()
         self.dealer = Player(0)
-        print(f'Welcome you big stud, here\'s {player.money} dollars! Don\'t blow it!')
+        print(f'Ring-a-ding-ding baby! Welcome to the Tops, here\'s {player.money} caps courtesy of the chairmen! Have a good time!')
 
     def play_game(self):
         while True:
             if self.player.money < 10:
-                print('You don\'t have enough money to play! Get out you vagrant!')
+                print('You don\'t have enough caps to play! Get out you vagrant!')
                 return
             self.play_round()
-            print(f'You currently have {self.player.money} dollars')
+            print(f'You currently have {self.player.money} caps')
             keep_playing = input('Would you like to keep playing? (y/n)')
             if keep_playing != 'y':
                 print('Come back to the Tops anytime!')
                 return
-        # if deck.len < 10:
+
     def bet_prompt(self):
         ante = 10
         while True:
@@ -103,29 +99,25 @@ class Game(object):
                 print('Money fail', self.player.money, bet)
                 continue
             if bet < ante:
-                print(f'Ante fail, you bet {bet} dollars, you must bet at least {ante} dollars')
+                print(f'Ante fail, you bet {bet} caps, you must bet at least {ante} caps')
                 continue
             break
 
         self.player.dollaz(bet)
-        print(f'You bet {bet} dollars, you have {self.player.money} dollars left')
+        print(f'You bet {bet} dollars, you have {self.player.money} caps left')
         return bet
-            # if bet > money
-            # if bet < ante
-            #
-        # while self.player.bet > self.player.money:
-        #     print('Can\'t bet that much, you only have f.()')
 
+    def dealer_timer(self):
+        dealer_timer = threading.Timer(3.0, dealer_timer)
+        dealer_timer.start()
 
     def play_round(self):
-        # determine winner
-        # reapportion money
-        # play again?
         bet = self.bet_prompt()
         for i in range(2):
             self.player.draw(self.deck)
         print(f'You have {self.player.hand}')
         for i in range(2):
+            dealer_timer.start()
             self.dealer.draw(self.deck)
         print(f'The dealer is showing {self.dealer.hand[0]}')
 
@@ -142,7 +134,10 @@ class Game(object):
 
         # FOR BUSTERS ONLY
         if player_score > 21:
-            print(f'You a loser! You had {self.player.hand} and it was bad!')
+            # if card.suit == 'A' in self.player.hand:
+            #     ace_changer()
+            # else:
+            print(f'You\'re a loser! You had {self.player.hand} and it was bad!')
             self.clean_up()
             return
 
@@ -173,16 +168,9 @@ class Game(object):
         return
 
     def clean_up(self):
-        # possibly create a new deck here too
+        self.deck.fresh_deck()
         self.player.clear_hnd()
         self.dealer.clear_hnd()
-
-        # if player.score > dealer.score:
-        #     input('You win! would you like to play again? (y/n)')
-        #
-        # else:
-        #     input('You lose! Would you like to play again (y/n)')
-
 
 # Below is an alternate way to construct while loops with implicit break conditions
         # keep_playing = True
@@ -198,7 +186,9 @@ class Game(object):
         #     self.player.draw(self.deck)
 
 
-
+# solve ace problem line 51-52
+# create fresh deck line 24-31
+# code war
 
 
 
