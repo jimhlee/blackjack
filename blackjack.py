@@ -1,5 +1,6 @@
 # Blackjack
 import random
+import time
 
 print('This is Blackjack')
 
@@ -21,14 +22,15 @@ class Deck(object):
     def shuffle(self):
         random.shuffle(self.cardlist)
 
-    def fresh_deck(self):
+    # Create a function that is called create_deck and call it both here and in the init
+    def check_deck(self):
         if len(self.cardlist) < 10:
             self.cardlist = []
             for suit in self.suits:
                 for value in self.values:
                     self.cardlist.append(Card(suit,value))
-                    self.shuffle()
-            return
+            self.shuffle()
+        return
 
 # Making a card class
 class Card(object):
@@ -48,9 +50,6 @@ class Card(object):
         else:
             return value
 
-    def ace_changer(self):
-        self.player.player_score -= 10
-
 class Player(object):
     def __init__(self, money):
         self.hand = []
@@ -66,11 +65,41 @@ class Player(object):
     def clear_hnd(self):
         self.hand = []
 
+    # self.hand is being called from the player class, but card.num_value is being called from the card instance THROUGH
+    # the player class. It has acces because a hand(player attribute) is full of cards.
     def score_hnd(self):
         score = 0
         for card in self.hand:
             score += card.num_value
+        # The below is the same thing as the block of code which comes after, just better and shorter
+        # n_aces = sum([1 if card.num_value == 11 else 0 for card in self.hand])
+        if score <= 21:
+            return score
+
+        n_aces = sum([1 for card in self.hand if card.num_value == 11])
+
+        # This is literally saying <if n_aces == 0> do nothing
+        if not n_aces:
+            return score
+
+        for _ in range(n_aces):
+            score -= 10
+            if score <= 21:
+                return score
+
+        # is_ace_lst = []
+        # for card in self.hand:
+        #     if card.num_value == 11:
+        #         is_ace = 1
+        #     else:
+        #         is_ace = 0
+        #     is_ace_lst.append(is_ace)
+        #     print(self.hand, is_ace_lst)
+        # n_aces = sum(is_ace_lst)
         return score
+
+    # def ace_changer(self):
+    #     self.player.player_score -= 10
 
 class Game(object):
     def __init__(self, player):
@@ -107,17 +136,12 @@ class Game(object):
         print(f'You bet {bet} dollars, you have {self.player.money} caps left')
         return bet
 
-    def dealer_timer(self):
-        dealer_timer = threading.Timer(3.0, dealer_timer)
-        dealer_timer.start()
-
     def play_round(self):
         bet = self.bet_prompt()
         for i in range(2):
             self.player.draw(self.deck)
         print(f'You have {self.player.hand}')
         for i in range(2):
-            dealer_timer.start()
             self.dealer.draw(self.deck)
         print(f'The dealer is showing {self.dealer.hand[0]}')
 
@@ -147,6 +171,7 @@ class Game(object):
             if dealer_score >= 17:
                 break
             print(f'The dealer is at {dealer_score}, and has {self.dealer.hand} in their hand')
+            time.sleep(2)
             self.dealer.draw(self.deck)
 
         if dealer_score > 21:
@@ -168,7 +193,7 @@ class Game(object):
         return
 
     def clean_up(self):
-        self.deck.fresh_deck()
+        self.deck.check_deck()
         self.player.clear_hnd()
         self.dealer.clear_hnd()
 
@@ -185,9 +210,6 @@ class Game(object):
         #         keep_playing = False
         #     self.player.draw(self.deck)
 
-
-# solve ace problem line 51-52
-# create fresh deck line 24-31
 # code war
 
 
