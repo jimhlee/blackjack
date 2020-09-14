@@ -1,54 +1,12 @@
 # Blackjack
-import random
 import time
+# This will import just BlackjackDeck
+from cardstuff import BlackjackDeck
+# import cardstuff <- this will import the entire module
+# and you call it with cardstuff.BlackjackDeck
+# do not do this -> from cardstuff import *
 
 print('This is Blackjack')
-
-# Making a deck class
-class Deck(object):
-    suits = ['H','S','C','D']
-    values = [2, 3, 4, 5, 6, 7, 8, 9, 10,'J','Q','K','A']
-
-    def __init__(self):
-        self.cardlist = []
-        for suit in self.suits:
-            for value in self.values:
-                self.cardlist.append(Card(suit,value))
-        self.shuffle()
-
-    def draw_card(self):
-        return self.cardlist.pop()
-
-    def shuffle(self):
-        random.shuffle(self.cardlist)
-
-    # Create a function that is called create_deck and call it both here and in the init
-    def check_deck(self):
-        if len(self.cardlist) < 10:
-            self.cardlist = []
-            for suit in self.suits:
-                for value in self.values:
-                    self.cardlist.append(Card(suit,value))
-            self.shuffle()
-        return
-
-# Making a card class
-class Card(object):
-    def __init__(self, suit, value):
-        self.suit = suit
-        self.str_value = str(value)
-        self.num_value = self.converter(value)
-
-    def __repr__(self):
-        return self.str_value + self.suit
-
-    def converter(self, value):
-        if value in ['J', 'Q', 'K']:
-            return 10
-        elif value == 'A':
-            return 11
-        else:
-            return value
 
 class Player(object):
     def __init__(self, money):
@@ -104,9 +62,10 @@ class Player(object):
 class Game(object):
     def __init__(self, player):
         self.player = player
-        self.deck = Deck()
+        self.deck = BlackjackDeck()
         self.dealer = Player(0)
         print(f'Ring-a-ding-ding baby! Welcome to the Tops, here\'s {player.money} caps courtesy of the chairmen! Have a good time!')
+        self.play_game()
 
     def play_game(self):
         while True:
@@ -210,11 +169,7 @@ class Game(object):
         #         keep_playing = False
         #     self.player.draw(self.deck)
 
-# code war
-
-
 
 if __name__ == '__main__':
-    my_deck = Deck()
     my_player = Player(100)
     play = Game(my_player)
